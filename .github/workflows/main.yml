@@ -19,4 +19,13 @@ jobs:
         IMAGE_NAME: 'demo-arla'
         DOCKERFILE_PATH: 'Dockerfile'
         BUILD_CONTEXT: '.'
+    - name: Deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: |
+          sudo docker login docker.pkg.github.com -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_TOKEN }}
+          sudo docker run -d -p 8080:80 docker.pkg.github.com/{OWNER}/{REPOSITORY}/{IMAGE_NAME}:{TAG}
         
