@@ -33,6 +33,10 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.SSH_PASSWORD }}
         script: |
-          sudo docker login docker.pkg.github.com -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_TOKEN }}
-          sudo docker pull ${{ steps.docker.outputs.IMAGE_SHA_NAME }}
+          docker login docker.pkg.github.com -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_TOKEN }}
+          docker stop $(docker ps -q) || true
+          docker rm $(docker ps -aq) || true
+          docker pull ${{ steps.docker.outputs.IMAGE_SHA_NAME }}
+          docker run -d -p 80:80 ${{ steps.docker.outputs.IMAGE_SHA_NAME }}
+          
         
