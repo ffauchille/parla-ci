@@ -10,22 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Publish image
-      uses: machine-learning-apps/gpr-docker-publish@master
-      id: docker
-      with:
-        USERNAME: ${{ secrets.DOCKER_USER }}
-        PASSWORD: ${{ secrets.DOCKER_TOKEN }}
-        IMAGE_NAME: 'demo-arla'
-        DOCKERFILE_PATH: 'Dockerfile'
-        BUILD_CONTEXT: '.'
-    - name: Show outputs of pervious step
+    - name: Build parla 
       run: |
-        echo "The name:tag of the Docker Image is: $VAR1"
-        echo "The docker image is hosted at $VAR2"
-      env:
-        VAR1: ${{ steps.docker.outputs.IMAGE_SHA_NAME }}
-        VAR2: ${{ steps.docker.outputs.IMAGE_URL }}
+       docker build -t docker.pkg.github.com/ffauchille/parla:v1 .
+       docker login docker.pkg.github.com -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_TOKEN }}
+       docker push docker.pkg.github.com/ffauchille/parla:v1
     - name: Deploy
       uses: appleboy/ssh-action@master
       with:
