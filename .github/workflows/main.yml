@@ -14,7 +14,7 @@ jobs:
       run: |
        docker build -t docker.pkg.github.com/ffauchille/parla/parla:v1 .
        docker login docker.pkg.github.com -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_TOKEN }}
-       docker push docker.pkg.github.com/ffauchille/parla:v1
+       docker push docker.pkg.github.com/ffauchille/parla/parla:v1
     - name: Deploy parla
       uses: appleboy/ssh-action@master
       with:
