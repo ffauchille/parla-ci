@@ -29,4 +29,4 @@ jobs:
           # Groupe SIGL: use the following line instead
           # docker run -d -p 80:80 --name parla-v1 docker.pkg.github.com/ffauchille/parla-ci/parla:v1          
           # and comment the next one
-          docker run -d --label traefik.enable=true --label traefik.docker.network=mobynet --label traefik.frontend.rule=Host:prof.arla-sigl.fr --label traefik.frontend.port=80 --name parla-v1 docker.pkg.github.com/ffauchille/parla-ci/parla:v1 
+          docker run -d --network="mobynet" --label traefik.enable=true --label traefik.docker.network=mobynet --label traefik.frontend.rule=Host:prof.arla-sigl.fr --label traefik.frontend.port=80 --name parla-v1 docker.pkg.github.com/ffauchille/parla-ci/parla:v1 
