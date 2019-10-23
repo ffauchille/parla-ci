@@ -23,6 +23,7 @@ jobs:
         password: ${{ secrets.WILLY_SSH_PASSWORD }}
         script: |
           docker login docker.pkg.github.com -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_TOKEN }}
+          cd parla
           docker-compose pull
           docker-compose down
           docker-compose up -d 
